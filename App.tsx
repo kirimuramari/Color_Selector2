@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Provider as PaperProvider, MD3LightTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ColorSelectorScreen from "./src/screens/ColorSelectorScreen";
+import ColorSelectorScreen  from "src/screens/ColorSelectorScreen";
 import * as SystemUI from "expo-system-ui";
 import React from "react";
 

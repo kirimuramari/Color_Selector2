@@ -2,6 +2,7 @@
   "name": "color-app",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "build": "expo export --platform web",
@@ -10,23 +11,35 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.11.4",
     "@supabase/supabase-js": "^2.81.1",
+    "autoprefixer": "^10.4.23",
     "expo": "~54.0.23",
-    "expo-dev-client": "^6.0.17",
-    "expo-status-bar": "~3.0.8",
-    "expo-system-ui": "~6.0.8",
+    "expo-dev-client": "^6.0.20",
+    "expo-status-bar": "~3.0.9",
+    "expo-system-ui": "~6.0.9",
+    "nativewind": "^4.2.1",
+    "postcss": "^8.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
+    "react-native-gesture-handler": "^2.28.0",
     "react-native-paper": "^5.14.5",
+    "react-native-reanimated": "^4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-url-polyfill": "^3.0.0",
     "react-native-vector-icons": "^10.3.0",
-    "react-native-web": "^0.21.0"
+    "react-native-web": "^0.21.0",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/react": "~19.1.10",
+    "@types/react-native": "^0.72.8",
+    "eslint": "^9.39.4",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "tailwindcss": "^4.1.18",
     "typescript": "~5.9.2"
   },
   "private": true
