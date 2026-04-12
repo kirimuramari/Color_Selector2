@@ -1,192 +1,140 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated } from "react-native";
-import {
-  Text,
-  Button,
-  Card,
-  Switch,
-  ActivityIndicator,
-} from "react-native-paper";
-import { supabase } from "../lib/supabaseClient";
+import { View,Text,ScrollView,Button  } from "react-native";
+import { useState} from "react";
+import { executeBrandSearch } from "../lib/search/feature/executeBrandSearch";
+import { BrandList } from "src/lib/search/config/brandList";
+import { BrandConfigMap } from "src/lib/search/config/brandConfig";
+import  BrandSectionContainer from "components/BrandSectionContainer";
+import { styles } from "style/style";
+import { useBrandSearch } from "@/hooks/useBrandSearch";
+import { SearchResultItem } from "../lib/search/config/brandTypes";
+import { BrandSectionConfigMap } from "../lib/search/config/brandSectionConfig";
 
-type Item = {
-  コード: number | null;
-  商品名: string;
-  セット名: string;
-  シリーズ名: string;
-  購入済み?: boolean;
-  __source?: "GreenOcean" | "Padico";
-};
 export default function ColorSelectorScreen() {
-  const [colors, setColors] = useState<Item[]>([]);
-  const [padicoColors, setPadicoColors] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isDecided, setDecided] = useState(false);
-  const [onlyPurchased, setOnlyPurchased] = useState(false);
-  const [includePadico, setIncludePadico] = useState(false);
-
-  const [selectedColors, setSelectedColors] = useState<Item[]>([]);
-
-  const fadeAnim = useRef(new Animated.Value(1)).current;
-
-  const animateResult = (callback: () => void) => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      callback();
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
-  useEffect(() => {
-    fetchColors();
-  }, [onlyPurchased]);
-
-  const fetchColors = async () => {
-    setLoading(true);
-    try {
-      // --- GreenOcean ---
-
-      let query = supabase.from("GreenOcean_Color").select("*");
-      // カラリー Switch が「購入済み」の時だけ絞り込み
-
-      if (onlyPurchased) {
-        query = query.eq("購入済み", true);
-      }
-      const { data: green, error: gErr } = await query;
-      //Padico
-      const { data: padico, error: pErr } = await supabase
-        .from("Padico_Color")
-        .select("*");
-
-      if (!gErr && green) {
-        const withTag = green.map((v) => ({ ...v, __source: "GreenOcean" }));
-        setColors(withTag);
-      }
-      if (!pErr && padico) {
-        const withTag = padico.map((v) => ({
-          ...v,
-          コード: null,
-          __source: "Padico",
-        }));
-        setPadicoColors(withTag);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching colors:", error);
-      setLoading(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [results, setResults] = useState<SearchResultItem[]>([]);
+    const [messages, setMessages] = useState<Record<string, string>>({});
+    const searches = BrandList.map((brand) => ({
+        brand,
+        search: useBrandSearch(brand),
     }
-  };
-  // GreenOcean ランダム 2色
-  const handleSelect = () => {
-    if (colors.length < 2) return;
-    const shuffle = (arr: any[]) => [...arr].sort(() => Math.random() - 0.5);
+)
+);
 
-    const selectedGreen = shuffle(colors).slice(0, 2);
-    let final = [...selectedGreen];
-    //Padico
-    if (includePadico && padicoColors.length >= 2) {
-      const selectedPadico = shuffle(padicoColors).slice(0, 2);
+const isAllRandomNone = searches.every(
+    ({search}) =>
+        !search.state.randomCount ||
+        search.state.randomCount === 0
+);
 
-      final = [...final, ...selectedPadico];
-    }
-    setSelectedColors(final);
-  };
-  return (
-    <View style={styles.container}>
-      <Card style={styles.card}>
-        <Text style={styles.title}>カラーセレクター 🎀</Text>
-        <Text style={styles.subTitle}>カラリー</Text>
-        <View style={styles.toggleRow}>
-          <Text>すべて</Text>
-          <Switch value={onlyPurchased} onValueChange={setOnlyPurchased} />
-          <Text>購入済み</Text>
-        </View>
-        <Text style={styles.subTitle}>パジコカラー</Text>
-        <View style={styles.toggleRow}>
-          <Text>含まない</Text>
-          <Switch value={includePadico} onValueChange={setIncludePadico} />
-          <Text>含む</Text>
-        </View>
+    const handleSubmit = async () => {
+        setError(null);
+        setMessages({});
+        // 送信前のチェック 
+        if (isAllRandomNone) {
+            setError("少なくとも1つのブランドで件数を指定してください");
+            return;
+        }
+        try {
+            setLoading(true);
+            // 検索実行 
+            const allResults = await Promise.all(
+                searches.map(async ({brand, search}) => {
 
-        {loading && (
-          <ActivityIndicator style={{ marginTop: 20 }} animating={true} />
-        )}
-        <Button
-          mode="contained"
-          onPress={() => {
-            animateResult(() => {
-              setDecided(true);
-              handleSelect();
+                    const res = await executeBrandSearch(
+                        brand,
+                        search.state,
+                    );
+                    const result = Array.isArray(res) ? res : res?.data ?? [];
+                    return {
+                        brand,
+                        result,
+                        state: search.state,
+                    };
+                })
+            );
+            const newMessages: Record<string, string> ={}
+            // 購入済みかのチェック
+
+            allResults.forEach(({brand,result,state}) => {
+                if (
+                    state.PurchaseFilterMode === "purchased" &&
+                 result.length === 0
+                ) {
+                    newMessages[brand] = "購入済みの商品がありません";
+                }
             });
-          }}
-          style={styles.okButton}
-        >
-          {isDecided ? "変更する" : "OK"}
-        </Button>
-        <Animated.View style={{ opacity: fadeAnim, marginTop: 20 }}>
-          {selectedColors.map((item, index) => (
-            <Card key={index} style={styles.resultCard}>
-              <Text style={styles.resultText}>
-                {item.__source === "GreenOcean"
-                  ? `${item.コード}番${item.セット名}の${item.商品名}`
-                  : `${item.シリーズ名}の${item.商品名}`}
-              </Text>
-            </Card>
-          ))}
-        </Animated.View>
-      </Card>
-    </View>
-  );
-}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
-  },
-  card: {
-    padding: 20,
-    borderRadius: 25,
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  subTitle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  toggleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    gap: 5,
-  },
+            setMessages(newMessages);
+            // 結果
+            setResults(
+                allResults.flatMap(r => r.result ?? [])
+            );
+        } catch (e) {
+            console.error("エラー詳細：",e);
+            setError("検索中にエラーが発生しました。");
+            
+        } finally {
+            setLoading(false);
+        }
+    };
+      
+    return (
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={styles.container}>
+                <Text style={styles.title}>カラーセレクター</Text>
+            {/* ブランド共通UI */}
 
-  okButton: {
-    marginTop: 20,
-    borderRadius: 20,
-    paddingVertical: 5,
-  },
-  resultCard: {
-    padding: 15,
-    marginVertical: 5,
-    borderRadius: 20,
-  },
-  resultText: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-});
+                <View style={styles.section}>
+            {searches.map(({brand,search}) => (
+
+                <View key={brand} style={styles.card}>
+                    <BrandSectionContainer
+                        brand={brand}
+                        search={search}
+                        
+                />
+                {!isAllRandomNone && messages[brand] && (
+                    <Text style={{color:"red"}}>
+                    {BrandSectionConfigMap[brand].title}の{messages[brand]}
+                    </Text>
+                )}
+                </View>
+                
+                  ))}
+               
+                    </View>
+                  
+                {/* OKボタン */}
+                <View style={styles.button}>
+                <Button  
+                title="OK"
+                onPress={handleSubmit}
+                
+                disabled={isAllRandomNone}
+               
+                />
+
+                    
+            
+             </View>
+             {/* エラー表示 */}
+             {error ? <Text style={styles.error}>{error}</Text> : null}
+             {isAllRandomNone && <Text style={styles.error}>少なくとも1つのブランドで件数を指定してください</Text>}
+            
+                 {/* 表示 */}
+             <View>
+                {results.map((item, index) => {
+                    const config = BrandConfigMap[item.brand];
+                    return (
+                        <Text key={index} style={styles.result}>
+                            {config.formatColorDisplay(item)}
+                        </Text>
+                    );
+                })}
+             </View>
+       </View>
+
+        </ScrollView>
+    );
+}
+        
