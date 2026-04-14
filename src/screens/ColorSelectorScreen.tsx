@@ -137,4 +137,3 @@ const isAllRandomNone = searches.every(
         </ScrollView>
     );
 }
-        
