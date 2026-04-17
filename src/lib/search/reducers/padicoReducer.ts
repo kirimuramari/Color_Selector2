@@ -27,11 +27,6 @@ export function padicoReducer(
                     ...state,
                     DiscontinuedFilterMode: action.payload,
                 };
-                // case "RESET_STATE":
-                //     return{
-                //         ...PadicoState,
-                //         ...PadicoAction.payload,
-                //     };
 
 
     

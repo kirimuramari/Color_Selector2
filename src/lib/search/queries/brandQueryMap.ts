@@ -16,7 +16,7 @@ export const brandQueryMap = {
         }
         return query;
     },
-    // セット名は必要か？
+    // セット名
     Padico: (query,state) => {
         if (!state.selectedSetIds) {
             query = query.in("セット名",state.selectedSetIds);
@@ -27,7 +27,7 @@ export const brandQueryMap = {
         }
         return query;
     },
-    // レジン道追加する
+    // レジン道
     Rejindou: (query,state) => {
         if (!state.PurchaseFilterMode) {
             query = query.eq("購入済み",true);

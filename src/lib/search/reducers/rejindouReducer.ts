@@ -23,11 +23,6 @@ action:SearchAction
                     ...state,
                     selectedSetIds:action.payload,
                 };
-            // case "RESET_STATE":
-            //     return {
-            //         filterMode:"all",
-            //         ...action.payload,
-            //     };
     
         default:
             return state;

@@ -1,15 +1,8 @@
-// BrandConfigMapのインポート先の変更
 
-import { SupabaseClient } from "@supabase/supabase-js";
 import { BrandConfigMap, } from "../config/brandConfig";
-import type { BrandKey, BrandState} from "../config/brandTypes";
-import type { BrandSearchStateMap } from "@/types/search/brandStateMap";
-import { queryFeatureHandlers } from "../config/queryFeatureHandlers";
-import { Database } from "types/database";
+import type { BrandKey} from "../config/brandTypes";
 import { supabase } from "../../supabaseClient";
 import { BrandStateMap } from "@/hooks";
-import { PurchaseFilterMode } from "types/search/PurchaseFilterMode";
-import { padicoState } from "../config/padicoState";
 
 // カラリー
 export function buildColoraryQuery(
@@ -30,7 +23,7 @@ const config = BrandConfigMap["Colorary"];
 
    return query;
 }
-// パジコも作るべきか？
+
 
 // レジン道
 export function buildRejindouQuery(

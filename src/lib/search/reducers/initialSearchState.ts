@@ -1,5 +1,4 @@
 //初期値
-// BrandConfigMapのインポート先の変更
 
 import {BrandSearchStateMap } from "@/types/search/brandStateMap";
 import { BrandConfigMap } from "../config/brandConfig";

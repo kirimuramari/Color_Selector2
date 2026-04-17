@@ -1,4 +1,4 @@
-// とこかと被るので不要
+
 // 検索条件そのもの
 // 検索オプションのベース
 import { PurchaseFilterMode } from "./search/PurchaseFilterMode";
@@ -25,11 +25,4 @@ export type BrandSearchOptions = {
   Padico?: PadicoSearchOption;
   Rejindou?: RejindouSearchOption;
 };
-
-// 不要部分
-// UI用(旧 BaseSearchOptionの一部)
-// export type SetFilterUIState = {
-//   setNames: string;
-// };
-
 

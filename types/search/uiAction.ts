@@ -1,5 +1,5 @@
 // UI / グローバル設定用
-import {  BrandKey } from "../brands";
+import {  BrandKey } from "src/lib/search/config/brandTypes";
 
 export type SearchUIAction = 
 |{

@@ -24,11 +24,7 @@ action:SearchAction
                     ...state,
                     selectedSetIds:action.payload,
                 };
-            // case "RESET_STATE":
-            //     return {
-            //         ...state,
-            //         ...action.payload,
-            //     };
+
     
         default:
             return state;

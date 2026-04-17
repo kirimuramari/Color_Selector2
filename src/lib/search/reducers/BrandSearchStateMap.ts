@@ -24,7 +24,10 @@ export const BrandSearchStateMap: Record<
     },
     Rejindou:{
         initialState:BrandConfigMap.Rejindou.initialState,
-        reducer:createSearchReducer(),
+        reducer:createSearchReducer({
+            initialState:BrandConfigMap.Rejindou.initialState,
+            reducer: createSearchReducer,
+        }),
     
     },
 };

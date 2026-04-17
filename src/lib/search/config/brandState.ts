@@ -1,5 +1,4 @@
 import { PurchaseFilterMode } from "@/types/search/PurchaseFilterMode";
-import { DiscontinuedFilterMode } from "types/search/DiscontinuedFilterMode";
 export type BaseSearchState = {
   PurchaseFilterMode:PurchaseFilterMode;
   
