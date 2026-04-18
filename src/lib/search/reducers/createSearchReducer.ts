@@ -1,7 +1,6 @@
 import {BaseSearchState } from "src/lib/search/config/brandState";
 import { SearchAction } from "types/search/actions";
 import React from "react";
-import { BrandFeatures } from "../config/config";
 
 type ExtraReducer<T extends BaseSearchState> = (
     state:T,
@@ -11,7 +10,7 @@ type ExtraReducer<T extends BaseSearchState> = (
 export function createSearchReducer<
 TState extends BaseSearchState
 >(
-    features: BrandFeatures
+   
 ): React.Reducer<TState, SearchAction> {
     return (state, action) => {
         switch (action.type) {
@@ -37,11 +36,7 @@ TState extends BaseSearchState
                             };
                      
                        
-                        case "RESET_STATE":
-                            return{
-                                ...state,
-                                ...action.payload,
-                            };
+                
                     default:
                         return state;
         }

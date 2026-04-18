@@ -12,9 +12,7 @@ export type QueryHandler<K extends keyof BrandSearchState> = (
     ctx:QueryContext
 ) => any;
 
-type PartialQueryFeatureHandlers = {
-    [K in keyof BrandSearchState]?:QueryHandler<K>;
-};
+
 
 
 

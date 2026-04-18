@@ -3,7 +3,7 @@ import { BrandKey } from "./brandTypes";
 import { SearchAction } from "@/types/search/actions";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { SetOption } from "@/types/search/set";
-import React, { Dispatch } from "react";
+import React from "react";
 import { BrandActionMap } from "../brands/plugin";
 import { ColoraryFeatures, PadicoFeatures,RejindouFeatures } from "../feature/features";
 
@@ -15,16 +15,16 @@ type FeatureFlags<T> = {
 
 export type features = {
   state:{
-             PurchaseFilterMode: true,
+             
              selectedSetIds: true,
              randomCount:true,
          },
             query:{
-                PurchaseFilterMode: true,
+                
                 selectedSetIds: true,
             },
             ui:{
-                PurchaseFilterMode: true,
+                
                 selectedSetIds: true,
                 randomCount:true,
             }

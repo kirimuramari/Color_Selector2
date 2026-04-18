@@ -1,6 +1,5 @@
-import { PurchaseFilterMode } from "@/types/search/PurchaseFilterMode";
 export type BaseSearchState = {
-  PurchaseFilterMode:PurchaseFilterMode;
+
   
   selectedSetIds:string[];
   randomCount:number | null;

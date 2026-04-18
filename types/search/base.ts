@@ -13,7 +13,7 @@ type BrandSearchOptionMap = {
 };
 
 const createBase = (): BaseSearchState => ({
-  PurchaseFilterMode: "all",
+  
   selectedSetIds: [],
   randomCount: null,
 });

@@ -1,7 +1,4 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { BrandKey,BrandState } from "../config/brandTypes";
-import { PurchaseFilterMode } from "types/search/PurchaseFilterMode";
-import { DiscontinuedFilterMode } from "types/search/DiscontinuedFilterMode";
 
 type BrandQueryBuilder<K extends BrandKey> = (
     query:any,
@@ -10,10 +7,7 @@ type BrandQueryBuilder<K extends BrandKey> = (
 
 export const brandQueryMap = {
     Colorary: (query,state) => {
-        if (!state.PurchaseFilterMode) {
-            query = query.eq("購入済み",true);
-        
-        }
+     
         return query;
     },
     // セット名
@@ -29,9 +23,7 @@ export const brandQueryMap = {
     },
     // レジン道
     Rejindou: (query,state) => {
-        if (!state.PurchaseFilterMode) {
-            query = query.eq("購入済み",true);
-        }
+      
         return query;
     }
 } satisfies {

@@ -30,18 +30,7 @@ export default function RejindouBrandSection<K extends BrandKey>({
         <View style={styles.section}>
             <Text style={styles.sectionTitle}>{title}</Text>
 
-            {config.allowFilterMode && (
-        <View style={styles.swichRow}>
-            <Text>購入済み</Text>
-            <Switch
-            value={state.PurchaseFilterMode === "all"}
-            onValueChange={(value) => 
-                actions.setFilterMode(value ? "all" : "purchased")
-            }
-            />
-            <Text>全て</Text>
-        </View>
-                    )}
+           
   {/* ランダム件数 */}
             {showRandom && (
                 <RandomCountPicker

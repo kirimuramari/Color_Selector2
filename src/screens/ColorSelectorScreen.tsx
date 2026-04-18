@@ -54,17 +54,9 @@ const isAllRandomNone = searches.every(
                 })
             );
             const newMessages: Record<string, string> ={}
-            // 購入済みかのチェック
+            // 購入済みかのチェック（今回は不要）
 
-            allResults.forEach(({brand,result,state}) => {
-                if (
-                    state.PurchaseFilterMode === "purchased" &&
-                 result.length === 0
-                ) {
-                    newMessages[brand] = "購入済みの商品がありません";
-                }
-            });
-            setMessages(newMessages);
+            
             // 結果
             setResults(
                 allResults.flatMap(r => r.result ?? [])
@@ -81,7 +73,7 @@ const isAllRandomNone = searches.every(
     return (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
-                <Text style={styles.title}>カラーセレクター</Text>
+                <Text style={styles.title}>カラーセレクター（公開用）</Text>
             {/* ブランド共通UI */}
 
                 <View style={styles.section}>

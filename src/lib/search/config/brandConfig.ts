@@ -1,14 +1,10 @@
-import { Database, TableColumn, TableRow } from "types/database";
 import { padicoReducer } from "../reducers/padicoReducer";
 import { coloraryReducer } from "../reducers/coloraryReducer";
 import { rejindouReducer } from "../reducers/rejindouReducer";
-import { BrandConfig, BrandFeatureMap} from "../config/config";
-import { buildColoraryQuery } from "../queries/buildBrandQuery";
+import { BrandConfig} from "../config/config";
 import { SetOption } from "@/types/search/set";
 import { ColoraryPlugin, PadicoPlugin, RejindouPlugin } from "../brands/plugin";
 import { BrandStateMap } from "@/hooks";
-import { supabase } from "../../supabaseClient";
-type Tables = keyof Database["public"]["Tables"];
 
 export const TABLES = {
     Padico_Master:"Padico_Master",
@@ -25,12 +21,7 @@ type QueryBuilder<K extends keyof any> = (
 ) => any;
 
 const queryBuilders: Record<string, QueryBuilder<any>> = {
-    PurchaseFilterMode: (query, value,config) => {
-        if (value === "purchased") {
-            return query.eq("購入済み",true);
-        }
-        return query;
-    },
+
     selectedSetIds:(query, value) => {
         if (value.length > 0) {
             return query.in("セット名", value); //("セット名", state.selectedSetIds)?
@@ -95,29 +86,28 @@ const ColoraryConfig = defineBrandConfig({
        },
        features: {
          state:{
-             PurchaseFilterMode: true,
+             
              selectedSetIds: true,
              randomCount:true,
          },
             query:{
-                PurchaseFilterMode: true,
+                
              selectedSetIds: true,
             },
             ui:{
-             PurchaseFilterMode: true,
+             
              selectedSetIds: true,
              randomCount:true,
             }
        },
         initialState: {
-            PurchaseFilterMode: "all",
             selectedSetIds: [],
             randomCount:0,
+
         },
         reducer:coloraryReducer,
         createActions: (dispatch) => ({
-            setFilterMode: (mode) =>
-                dispatch({ type: "SET_PURCHASEFILTER_MODE", payload: mode }),
+            
             setRandomCount:(count:number | null) =>
                 dispatch({type:"SET_RANDOM_COUNT",payload:count}),
             setSelectedSetIds: (ids) =>
@@ -147,33 +137,32 @@ const PadicoConfig = defineBrandConfig<"Padico">({
         },
         features: {
             state:{
-                PurchaseFilterMode: true,
+                
                 DiscontinuedFilterMode:true,
                 selectedSetIds: true,
                 randomCount:true,
                 },
             query:{
-                PurchaseFilterMode: true,
+                
                 DiscontinuedFilterMode:true,
                 selectedSetIds: true,
             },
             ui:{
-                PurchaseFilterMode: true,
+                
                 DiscontinuedFilterMode:true,
                 selectedSetIds: true,
                 randomCount:true,
             },
         },
        initialState:{
-            PurchaseFilterMode: "all",
+            
             DiscontinuedFilterMode:"include",
             selectedSetIds: [],
             randomCount:0,
        },
        reducer:padicoReducer,
        createActions: (dispatch) => ({
-            setFilterMode:(mode) =>
-                dispatch({ type: "SET_PURCHASEFILTER_MODE", payload:mode}),
+           
             setIncludeDiscontinuedMode:(mode) =>
                 dispatch({ type:"SET_DISCONTINUEDFILTER_MODE",payload:mode}),
             setRandomCount:(count) =>
@@ -202,29 +191,28 @@ const RejindouConfig = defineBrandConfig({
         },
   features: {
          state:{
-             PurchaseFilterMode: true,
+             
              selectedSetIds: true,
              randomCount:true,
          },
             query:{
-                PurchaseFilterMode: true,
+                
              selectedSetIds: true,
             },
             ui:{
-PurchaseFilterMode: true,
+
              selectedSetIds: true,
              randomCount:true,
             }
        },
         initialState: {
-            PurchaseFilterMode: "all",
+            
             selectedSetIds: [],
             randomCount:0,
         },
      reducer:rejindouReducer,
      createActions: (dispatch) => ({
-setFilterMode:(mode) =>
-   dispatch({ type: "SET_PURCHASEFILTER_MODE", payload:mode}),
+
 setRandomCount:(count) =>
    dispatch({type:"SET_RANDOM_COUNT",payload:count}),
 setSelectedSetIds: (ids) =>

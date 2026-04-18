@@ -10,7 +10,7 @@ export function createSupabaseQueryBuilder(
             // Padicoだけ除外
             if (table !== "Padico_Master") {
                 query = applySetFilter(query as any, state);
-                console.log("🔥 PADICO QUERY");
+               
             }
             return query;
         }

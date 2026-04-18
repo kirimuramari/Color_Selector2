@@ -26,7 +26,6 @@ export const buildSearchQueries = (
   }
 
   let query = supabase.from(config.tableName).select("*")
-console.log("🔥 BUILD SEARCH QUERIES");
   // セット指定（allColors OFF のときのみ）
   if (
     config.enableSetSelect &&

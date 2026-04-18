@@ -1,6 +1,5 @@
 // reducer 用 Action
 import { BaseSearchState } from "@/src/lib/search/config/brandState";
-import { PurchaseFilterMode } from "@/types/search/PurchaseFilterMode";
 import { DiscontinuedFilterMode } from "types/search/DiscontinuedFilterMode";
 
 
@@ -22,10 +21,7 @@ export type BaseSearchAction =
     payload:string;
 }
 
-| {
-   type: "SET_PURCHASEFILTER_MODE";
-    payload: PurchaseFilterMode;
-}
+
 |{
     type: "SET_RANDOM_COUNT";
     payload: number | null;
@@ -47,10 +43,7 @@ export type SearchAction =
     payload:BaseSearchState;
 }
 
-|{
-    type: "SET_PURCHASEFILTER_MODE";
-    payload: PurchaseFilterMode;
-}
+
 
 |{
     type: "SET_RANDOM_COUNT";

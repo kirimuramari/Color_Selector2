@@ -16,9 +16,7 @@ const config = BrandConfigMap["Colorary"];
   .select("*")
   .order("番号",{ascending:true});
 
-   if (state.PurchaseFilterMode === "purchased") {
-     query = query.eq(config.columns.purchased,true);
-   } 
+
 
 
    return query;
@@ -36,9 +34,7 @@ export function buildRejindouQuery(
   .select("*")
   .order("番号",{ascending:true});
 
-      if (state.PurchaseFilterMode === "purchased") {
-    query = query.eq(config.columns.purchased,true);
-   } 
+     
    return query;
 }
 

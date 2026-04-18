@@ -7,25 +7,21 @@ import {  createPadicoInitialState} from "../config/padicoState";
 import { rejindouReducer } from "../reducers/rejindouReducer";
 import { BrandKey } from "../config/brandTypes";
 import { BrandStateMap } from "@/hooks";
-import { PurchaseFilterMode } from "@/types/search/PurchaseFilterMode";
 import { DiscontinuedFilterMode } from "@/types/search/DiscontinuedFilterMode";
 
 export type BrandActionMap = {
     Colorary: {
-        setFilterMode: (mode: PurchaseFilterMode) => void;
         setRandomCount: (count: number | null) => void;
         setSelectedSetIds: (ids: string[]) => void;
     };
 
     Padico:{
-        setFilterMode: (mode: PurchaseFilterMode) => void;
         setIncludeDiscontinuedMode: (mode: DiscontinuedFilterMode) => void;
         setRandomCount: (count: number | null) => void;
         setSelectedSetIds: (ids: string[]) => void;
     };
 
     Rejindou: {
-        setFilterMode: (mode: PurchaseFilterMode) => void;
         setRandomCount: (count: number | null) => void;
         setSelectedSetIds: (ids: string[]) => void;
     };
@@ -67,8 +63,7 @@ export const ColoraryPlugin:BrandPlugin<"Colorary"> = {
     initialState: createBaseInitialState(),
     reducer: coloraryReducer,
    createActions: (dispatch) => ({
-    setFilterMode:(mode) =>
-        dispatch({ type: "SET_PURCHASEFILTER_MODE", payload:mode}),
+    
     setRandomCount:(count) =>
         dispatch({type:"SET_RANDOM_COUNT",payload:count}),
     setSelectedSetIds: (ids) =>
@@ -79,8 +74,7 @@ export const RejindouPlugin:BrandPlugin<"Rejindou"> = {
     initialState: createBaseInitialState(),
     reducer: rejindouReducer,
      createActions: (dispatch) => ({
-    setFilterMode:(mode) =>
-        dispatch({ type: "SET_PURCHASEFILTER_MODE", payload:mode}),
+   
     setRandomCount:(count) =>
         dispatch({type:"SET_RANDOM_COUNT",payload:count}),
     setSelectedSetIds: (ids) =>
@@ -93,8 +87,7 @@ export const PadicoPlugin:BrandPlugin<"Padico"> = {
     initialState: createPadicoInitialState(),
     reducer: padicoReducer,
       createActions: (dispatch) => ({
-    setFilterMode:(mode) =>
-        dispatch({ type: "SET_PURCHASEFILTER_MODE", payload:mode}),
+   
     setIncludeDiscontinuedMode:(mode) =>
         dispatch({ type:"SET_DISCONTINUEDFILTER_MODE",payload:mode}),
     setRandomCount:(count) =>

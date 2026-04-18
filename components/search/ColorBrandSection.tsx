@@ -27,19 +27,8 @@ export  function ColorBrandSection<K extends BrandKey>({
     return (
     <View style={styles.section}>
         <Text style={styles.sectionTitle}>{title}</Text>
-            {/* フィルター */}
-            {config.allowFilterMode && (
-        <View style={styles.swichRow}>
-                <Text>購入済み</Text>
-                <Switch
-  value={state.PurchaseFilterMode === "all"}
-  onValueChange={(value) => 
-    actions.setFilterMode(value ? "all" : "purchased")
-  }
-/>
-                <Text>全て</Text>
-            </View>
-            )}
+            {/* フィルター はなし*/}
+      
             {/* ランダム件数 */}
             {showRandom && (                
                 <RandomCountPicker

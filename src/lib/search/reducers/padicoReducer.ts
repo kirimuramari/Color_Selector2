@@ -6,11 +6,6 @@ export function padicoReducer(
     action:SearchAction
 ):padicoState {
     switch (action.type) {
-         case "SET_PURCHASEFILTER_MODE":
-            return {
-                ...state,
-                PurchaseFilterMode:action.payload,
-            };
              case "SET_RANDOM_COUNT":
                 return {
                     ...state,

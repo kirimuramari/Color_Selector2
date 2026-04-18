@@ -1,5 +1,4 @@
 import { BrandKey } from "src/lib/search/config/brandTypes";
-import { PurchaseFilterMode } from "@/types/search/PurchaseFilterMode";
 import { DiscontinuedFilterMode } from "@/types/search/DiscontinuedFilterMode";
 import { BrandConfigMap, } from "@/src/lib/search/config/brandConfig";
 import React from "react";
@@ -9,19 +8,16 @@ export type BrandStateMap = {
     Colorary: {      
     selectedSetIds:string[];
     randomCount:number | null;
-    PurchaseFilterMode:PurchaseFilterMode;
     };
 
     Padico: {
         selectedSetIds:string[];
         randomCount:number| null;
         DiscontinuedFilterMode:DiscontinuedFilterMode;   
-        PurchaseFilterMode:PurchaseFilterMode;
     };
     Rejindou: {
         selectedSetIds:string[];
         randomCount:number| null;
-        PurchaseFilterMode:PurchaseFilterMode;
     
     };
 };

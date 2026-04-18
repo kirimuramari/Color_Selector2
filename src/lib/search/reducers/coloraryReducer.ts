@@ -8,11 +8,6 @@ action:SearchAction
 ):coloraryState {
     switch (action.type) {
      
-        case "SET_PURCHASEFILTER_MODE":
-         return {
-                ...state,
-                PurchaseFilterMode:action.payload,
-            };
             
             case "SET_RANDOM_COUNT":
                 return {
