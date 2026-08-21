@@ -28,6 +28,7 @@ export type Database = {
                     "商品名":string;
                     "セット名":string;
                     "購入済み":boolean;
+                    "種類":string;
                 
             };
     Padico_Master:{
