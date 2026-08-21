@@ -122,7 +122,7 @@ const ColoraryConfig = defineBrandConfig({
        
         formatSetOptions: createSetOptionsFormatter("セット名"),
         formatColorDisplay(item) {
-            return `・カラリーの${item["セット名"]}の${item["コード"]}番の${item["商品名"]}`;
+            return `・カラリーの${item["セット名"]}の${item["コード"]}番の${item["商品名"]} (${item["種類"]})`;
         },
 
    });
